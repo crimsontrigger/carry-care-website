@@ -1,0 +1,24 @@
+.cards-container {
+  border-radius: 10px;
+}
+
+.cards-container-order {
+  border-radius: 10px;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.cards-container :hover {
+  background-color: #ff8e7a;
+  cursor: pointer;
+  color: "white";
+  border-radius: 10px;
+}
