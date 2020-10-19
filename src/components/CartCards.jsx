@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 
 import "./styles.css";
 
-const OrderCards = (props) => {
+const CartCards = (props) => {
   const onAdd = (index) => {
     let currCart = props.cart.cart;
     if (currCart[props.itemNumber]) {
@@ -156,4 +156,4 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderCards);
+export default connect(mapStateToProps, mapDispatchToProps)(CartCards);

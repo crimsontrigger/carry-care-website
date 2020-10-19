@@ -1,5 +1,5 @@
 const initialState = {
-  cart: [],
+  cart: {},
   items: [],
   totalAmount: 0,
   totalItems: 0,
@@ -8,9 +8,7 @@ const initialState = {
 const CartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
-      let currentCart = state.cart;
-      currentCart.push(action.payload);
-      return { ...state, cart: currentCart };
+      return { ...state, cart: action.payload };
     case "ADD_TO_ITEMS":
       return { ...state, items: action.payload };
     case "ADD_TOTAL":

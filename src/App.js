@@ -13,7 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   useEffect(() => {
     Firebase.initializeApp(config);
-  });
+  }, []);
   return (
     <Provider store={store}>
       <BrowserRouter>

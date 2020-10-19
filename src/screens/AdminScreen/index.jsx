@@ -10,7 +10,14 @@ const AdminScreen = () => {
   const [password, setPassword] = useState("");
   const db = Firebase.firestore();
   const onClickAdd = () => {
-    db.collection("items").add({ name: emailId, value: password, count: 0 });
+    let itemNumber = Math.floor(Math.random() * 10000000 + 1).toString();
+    let fin = emailId.concat(itemNumber);
+    db.collection("items").add({
+      name: emailId,
+      value: password,
+      count: 0,
+      itemNumber: fin,
+    });
   };
   return (
     <div>
