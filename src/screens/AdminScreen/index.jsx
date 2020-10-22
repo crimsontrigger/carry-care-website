@@ -1,24 +1,21 @@
-import React, { useState } from "react";
-import Firebase from "firebase";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import { ItemActions, AdminActions } from "../../redux/actions";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { useHistory } from "react-router-dom";
 
 import "./styles.css";
 import { CardCustom, NavbarCustom, CarousalCustom } from "../../components";
 
-const AdminScreen = () => {
+const AdminScreen = (props) => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
-  const db = Firebase.firestore();
   const onClickAdd = () => {
-    let itemNumber = Math.floor(Math.random() * 10000000 + 1).toString();
-    let fin = emailId.concat(itemNumber);
-    db.collection("items").add({
-      name: emailId,
-      value: password,
-      count: 0,
-      itemNumber: fin,
-    });
+    props.addNewItem(emailId, password, "diwaliSavories");
   };
+  const history = useHistory();
+
   return (
     <div>
       <NavbarCustom />
@@ -58,9 +55,38 @@ const AdminScreen = () => {
             Add
           </Button>
         </Form>
+        <div
+          style={{
+            height: "2px",
+            width: "100%",
+            marginTop: "2%",
+            backgroundColor: "#696969",
+          }}
+        />
+        <Button
+          onClick={() => {
+            history.push("/adm/view-orders-savories");
+          }}
+          style={{ marginTop: "3%" }}
+        >
+          View Savories Orders
+        </Button>
       </div>
     </div>
   );
 };
 
-export default AdminScreen;
+const mapStateToProps = (state) => {
+  return { cart: state.cart, user: state.user, order: state.order };
+};
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addNewItem: ItemActions.addNewItem,
+      getOrdersType: AdminActions.getOrdersType,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminScreen);

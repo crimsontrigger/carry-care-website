@@ -5,6 +5,8 @@ import { CartActions } from "../redux/actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import PlusIcon from "../assets/plus.png";
+import MinusIcon from "../assets/minus.png";
 import "./styles.css";
 
 const OrderCards = (props) => {
@@ -45,8 +47,7 @@ const OrderCards = (props) => {
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
         <Card.Text>
-          Rs.
-          {props.value}
+          <span>&#8377;</span> {props.value}
         </Card.Text>
         {!props.cart.cart[props.itemNumber] ? (
           <div
@@ -63,7 +64,7 @@ const OrderCards = (props) => {
               style={{
                 width: "60%",
                 height: "100%",
-                backgroundColor: "#2DE67D",
+                backgroundColor: "#5cb85c",
                 color: "white",
                 borderRadius: "5px",
                 flexDirection: "row",
@@ -83,7 +84,7 @@ const OrderCards = (props) => {
             }}
           >
             <Button
-              variant="outline-danger"
+              variant="danger"
               style={{
                 width: "20%",
                 display: "flex",
@@ -95,11 +96,7 @@ const OrderCards = (props) => {
                 onRemove(props.index);
               }}
             >
-              <img
-                src="https://img.icons8.com/material/24/000000/minus--v1.png"
-                height="20px"
-                width="20px"
-              />
+              <img src={MinusIcon} height="20px" width="20px" />
             </Button>
             <Button
               variant="outline-primary"
@@ -111,13 +108,16 @@ const OrderCards = (props) => {
                 alignItems: "center",
                 color: "black",
                 fontWeight: "400",
+                borderRadius: "0px",
+                borderRight: "0px",
+                borderLeft: "0px",
               }}
               disabled
             >
               {props.cart.cart[props.itemNumber].count}
             </Button>
             <Button
-              variant="outline-success"
+              variant="success"
               style={{
                 width: "20%",
                 display: "flex",
@@ -129,11 +129,7 @@ const OrderCards = (props) => {
                 onAdd(props.index);
               }}
             >
-              <img
-                src="https://img.icons8.com/metro/26/000000/plus-math.png"
-                height="20px"
-                width="20px"
-              />
+              <img src={PlusIcon} height="20px" width="20px" />
             </Button>
           </div>
         )}

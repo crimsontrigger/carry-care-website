@@ -45,8 +45,7 @@ const CartCards = (props) => {
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
         <Card.Text>
-          Rs.
-          {props.value}
+          <span>&#8377;</span> {props.value}
         </Card.Text>
         {!props.cart.cart[props.itemNumber] ? (
           <div

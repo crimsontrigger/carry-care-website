@@ -6,9 +6,9 @@ import storage from "redux-persist/lib/storage";
 
 // Redux Persist
 const persistConfig = {
-  key: "cart",
+  key: "greenKitchen",
   storage: storage,
-  whitelist: ["cart"], // which reducer want to store
+  whitelist: ["cart", "user"], // which reducer want to store
 };
 const finalReducers = persistReducer(persistConfig, reducers);
 

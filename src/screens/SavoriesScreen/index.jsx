@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import Firebase from "firebase";
 
 import "./styles.css";
 import {
@@ -12,24 +11,11 @@ import {
   OrderCards,
   Loading,
 } from "../../components";
-import { CartActions } from "../../redux/actions";
+import { CartActions, ItemActions } from "../../redux/actions";
 
 const SavoriesScreen = (props) => {
-  const [items, setItems] = useState([]);
-  const db = Firebase.firestore();
-
-  const fetchData = async () => {
-    let res = await db.collection("items").get();
-    let arr = [];
-    res.forEach((doc) => {
-      arr.push(doc.data());
-    });
-    // setItems(arr);
-    props.addItems(arr);
-  };
-
   useEffect(() => {
-    fetchData();
+    props.getItemType("diwaliSavories");
   }, []);
   const history = useHistory();
 
@@ -40,15 +26,15 @@ const SavoriesScreen = (props) => {
         <h2>Savories</h2>
       </div>
       <div className="ordering-container">
-        {props.cart.items.length > 0 ? (
-          props.cart.items.map((item, index) => {
+        {props.item.items.length > 0 && props.item.loading === false ? (
+          props.item.items.map((item, index) => {
             return (
               <div style={{ marginTop: "2%" }}>
                 <OrderCards
                   name={item.name}
                   value={item.value}
                   count={item.count}
-                  itemNumber={item.itemNumber}
+                  itemNumber={item._id}
                   index={index}
                 />
               </div>
@@ -65,7 +51,17 @@ const SavoriesScreen = (props) => {
             history.push("/summary");
           }}
         >
-          <div className="footer-compo">Rs.{props.cart.totalAmount}</div>
+          <div
+            className="footer-compo"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <span>&#8377;</span> {props.cart.totalAmount}
+          </div>
           <div className="footer-compo">CART</div>
           <div className="footer-compo">{props.cart.totalItems} Items</div>
         </div>
@@ -75,10 +71,13 @@ const SavoriesScreen = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { cart: state.cart };
+  return { cart: state.cart, item: state.item };
 };
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ addItems: CartActions.addItems }, dispatch);
+  bindActionCreators(
+    { addItems: CartActions.addItems, getItemType: ItemActions.getItemType },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavoriesScreen);
