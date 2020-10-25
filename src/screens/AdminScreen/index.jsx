@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { ItemActions, AdminActions } from "../../redux/actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { message } from "antd";
 import { useHistory } from "react-router-dom";
 
 import "./styles.css";
@@ -11,6 +12,20 @@ import { CardCustom, NavbarCustom, CarousalCustom } from "../../components";
 const AdminScreen = (props) => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (props.item.success && !props.item.loading) {
+      setEmailId("");
+      setPassword("");
+
+      message.success("item added successfully");
+    } else if (!props.item.success && !props.item.loading && props.item.err) {
+      message.error(
+        "There was an error in proccessing your order. Please try again after some time!"
+      );
+    }
+  }, [props.item.success, props.item.err]);
+
   const onClickAdd = () => {
     props.addNewItem(emailId, password, "diwaliSavories");
   };
@@ -77,7 +92,7 @@ const AdminScreen = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { cart: state.cart, user: state.user, order: state.order };
+  return { item: state.item, user: state.user, order: state.order };
 };
 
 const mapDispatchToProps = (dispatch) =>

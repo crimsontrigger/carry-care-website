@@ -26,19 +26,19 @@ const OrderSummaryScreen = (props) => {
   const [phoneNumber, setPhoneNumber] = useState(props.user.phoneNumber);
   const history = useHistory();
 
-  useEffect(() => {
-    if (props.order.success && !props.order.loading) {
-      history.push("/success");
-    } else if (
-      !props.order.success &&
-      !props.order.loading &&
-      props.order.err
-    ) {
-      message.error(
-        "There was an error in proccessing your order. Please try again after some time!"
-      );
-    }
-  }, [props.order.success]);
+  // useEffect(() => {
+  //   if (props.order.success && !props.order.loading) {
+  //     history.push("/success");
+  //   } else if (
+  //     !props.order.success &&
+  //     !props.order.loading &&
+  //     props.order.err
+  //   ) {
+  //     message.error(
+  //       "There was an error in proccessing your order. Please try again after some time!"
+  //     );
+  //   }
+  // }, [props.order.success]);
 
   const onClickAdd = () => {
     props.addNewOrder(

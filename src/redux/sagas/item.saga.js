@@ -16,7 +16,7 @@ export function* addNewItem(action) {
     });
   } catch (error) {
     console.log("Add items error ", error.response);
-    yield put({ type: ItemTypes.ADD_ITEM_ERROR, error });
+    yield put({ type: ItemTypes.ADD_ITEM_ERROR, error: "error" });
   }
 }
 
