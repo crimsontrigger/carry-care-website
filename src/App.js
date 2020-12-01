@@ -6,17 +6,20 @@ import Firebase from "firebase";
 import { store } from "./redux";
 import Main from "./navigation";
 import { config } from "./config/firebase.config";
+import { NavbarCustom, MenuTab } from "./components";
 
 import "antd/dist/antd.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  useEffect(() => {
-    Firebase.initializeApp(config);
-  }, []);
+  // useEffect(() => {
+  //   Firebase.initializeApp(config);
+  // }, []);
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <NavbarCustom />
+        <MenuTab />
         <Main />
       </BrowserRouter>
     </Provider>

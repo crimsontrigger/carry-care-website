@@ -25,22 +25,6 @@ class MainApi extends HttpClient {
   addNewItem = (item) => {
     return this.instance.post(`${routes.ITEM}/add`, item);
   };
-
-  getItemType = (type) => {
-    return this.instance.post(`${routes.ITEM}/`, type);
-  };
-
-  addNewOrder = (order) => {
-    return this.instance.post(`${routes.ORDER}/add`, order);
-  };
-
-  getOrdersType = (type) => {
-    return this.instance.post(`${routes.ORDER}/`, type);
-  };
-
-  updateOrderStatus = (body) => {
-    return this.instance.post(`${routes.ORDER}/update-status`, body);
-  };
 }
 
 export default MainApi;
