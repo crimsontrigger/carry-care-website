@@ -8,6 +8,9 @@ const CompanyDetails = () => {
   const [dataSource, setDataSource] = useState([]);
   const [showDataForm, setShowDataForm] = useState(false);
 
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+
   const columns = [
     {
       title: "NUM_company_id",
@@ -35,6 +38,14 @@ const CompanyDetails = () => {
     console.log("data: ", dataSource);
   }, [dataSource]);
 
+  useEffect(() => {
+    if (selectedRows.length > 0) {
+      setShowDeleteButton(true);
+    } else {
+      setShowDeleteButton(false);
+    }
+  }, [selectedRows]);
+
   const addRow = (rowData) => {
     let tempData = dataSource;
     rowData.key = tempData.length + 1;
@@ -47,12 +58,22 @@ const CompanyDetails = () => {
     setShowDataForm(true);
   };
 
+  const handleDelete = () => {
+    selectedRows.forEach((row) => {
+      let tempData = dataSource;
+      const index = tempData.indexOf(row);
+      tempData.splice(index, 1);
+      setDataSource([...tempData]);
+    });
+  };
+
   const setModalVisible = (tempbool) => {
     setShowDataForm(tempbool);
   };
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
+      setSelectedRows(selectedRows);
       console.log(
         `selectedRowKeys: ${selectedRowKeys}`,
         "selectedRows: ",
@@ -77,6 +98,13 @@ const CompanyDetails = () => {
         <Button variant={"primary"} onClick={handleAddData}>
           Add Row
         </Button>
+        {showDeleteButton && (
+          <Button variant={"primary"} onClick={handleDelete}>
+            {selectedRows.length > 1
+              ? "Delete Selected Rows"
+              : "Delete Selected Row"}
+          </Button>
+        )}
       </div>
       <Table
         columns={columns}
