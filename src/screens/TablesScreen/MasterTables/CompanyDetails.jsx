@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Table } from "antd";
-import Button from "react-bootstrap/Button";
-import DataInputModal from "./../../../components/DataInputModal";
+import React from "react";
+import CustomTable from "./../../../components/CustomTable";
+
 import "./../styles.css";
 
 const CompanyDetails = () => {
-  const [dataSource, setDataSource] = useState([]);
-  const [showDataForm, setShowDataForm] = useState(false);
-
-  const [showDeleteButton, setShowDeleteButton] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
+  const data = [];
 
   const columns = [
     {
@@ -34,85 +29,7 @@ const CompanyDetails = () => {
     },
   ];
 
-  useEffect(() => {
-    console.log("data: ", dataSource);
-  }, [dataSource]);
-
-  useEffect(() => {
-    if (selectedRows.length > 0) {
-      setShowDeleteButton(true);
-    } else {
-      setShowDeleteButton(false);
-    }
-  }, [selectedRows]);
-
-  const addRow = (rowData) => {
-    let tempData = dataSource;
-    rowData.key = tempData.length + 1;
-    tempData.push(rowData);
-    setDataSource([...tempData]);
-    console.log(dataSource);
-  };
-
-  const handleAddData = () => {
-    setShowDataForm(true);
-  };
-
-  const handleDelete = () => {
-    selectedRows.forEach((row) => {
-      let tempData = dataSource;
-      const index = tempData.indexOf(row);
-      tempData.splice(index, 1);
-      setDataSource([...tempData]);
-    });
-  };
-
-  const setModalVisible = (tempbool) => {
-    setShowDataForm(tempbool);
-  };
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRows(selectedRows);
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
-    // getCheckboxProps: (record) => ({
-    //   disabled: record.name === "Disabled User", // Column configuration not to be checked
-    //   name: record.name,
-    // }),
-  };
-
-  return (
-    <div style={{ width: "100%" }}>
-      <DataInputModal
-        addRow={addRow}
-        columns={columns}
-        setVisible={setModalVisible}
-        visible={showDataForm}
-      />
-      <div className={"table-actions-container"}>
-        <Button variant={"primary"} onClick={handleAddData}>
-          Add Row
-        </Button>
-        {showDeleteButton && (
-          <Button variant={"primary"} onClick={handleDelete}>
-            {selectedRows.length > 1
-              ? "Delete Selected Rows"
-              : "Delete Selected Row"}
-          </Button>
-        )}
-      </div>
-      <Table
-        columns={columns}
-        dataSource={dataSource}
-        rowSelection={{ ...rowSelection }}
-      />
-    </div>
-  );
+  return <CustomTable tableColumns={columns} tableData={data} />;
 };
 
 export default CompanyDetails;
