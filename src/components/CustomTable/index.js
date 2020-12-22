@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import Button from "react-bootstrap/Button";
 import DataInputModal from "./../DataInputModal";
+import { v4 as uuidv4 } from "uuid";
 
 import "./styles.css";
 
@@ -19,6 +20,7 @@ const CustomTable = ({ tableData, tableColumns }) => {
   // This should not be necessary once redux is added
   useEffect(() => {
     if (tableData.length > 0) setDataSource([...tableData]);
+    else setDataSource([]);
   }, [tableData]);
 
   useEffect(() => {
@@ -34,9 +36,10 @@ const CustomTable = ({ tableData, tableColumns }) => {
     // manipulation of data should either be done to redux state or in the parent component of CustomTable
     // bug - assigning row key is wrong, and causes the deletion of data to break
     let tempData = dataSource;
-    rowData.key = tempData.length + 1;
+    rowData.key = uuidv4();
     tempData.push(rowData);
     setDataSource([...tempData]);
+    setSelectedRows([]);
     console.log(dataSource);
   };
 
@@ -54,6 +57,7 @@ const CustomTable = ({ tableData, tableColumns }) => {
       tempData.splice(index, 1);
       setDataSource([...tempData]);
     });
+    setSelectedRows([]);
   };
 
   const setModalVisible = (tempbool) => {
