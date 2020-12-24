@@ -19,8 +19,10 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <NavbarCustom />
-        <MenuTab />
-        <Main />
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <MenuTab />
+          <Main />
+        </div>
       </BrowserRouter>
     </Provider>
   );
