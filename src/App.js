@@ -18,7 +18,7 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <NavbarCustom />
+        {/* <NavbarCustom /> */}
         <div style={{ display: "flex", flexDirection: "row" }}>
           <MenuTab />
           <Main />
