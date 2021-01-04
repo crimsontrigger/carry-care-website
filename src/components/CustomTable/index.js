@@ -3,6 +3,7 @@ import { Table } from "antd";
 import Button from "react-bootstrap/Button";
 import DataInputModal from "./../DataInputModal";
 import { v4 as uuidv4 } from "uuid";
+import { EditFilled } from "@ant-design/icons";
 
 import "./styles.css";
 
@@ -12,6 +13,9 @@ const CustomTable = ({ tableData, tableColumns }) => {
 
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const [isEdit, setIsEdit] = useState(false);
+  const [editedRow, setEditedRow] = useState({});
 
   useEffect(() => {
     console.log("data: ", dataSource);
@@ -32,12 +36,23 @@ const CustomTable = ({ tableData, tableColumns }) => {
   }, [selectedRows]);
 
   const addRow = (rowData) => {
-    // TO DO:
-    // manipulation of data should either be done to redux state or in the parent component of CustomTable
-    // bug - assigning row key is wrong, and causes the deletion of data to break
     let tempData = dataSource;
     rowData.key = uuidv4();
     tempData.push(rowData);
+    setDataSource([...tempData]);
+    setSelectedRows([]);
+    console.log(dataSource);
+  };
+
+  const editRow = (rowData) => {
+    let tempData = dataSource;
+    tempData.forEach((row) => {
+      if (row.key === rowData.key) {
+        row = Object.assign(row, rowData);
+        console.log("old row data: ", row);
+        console.log("new row data: ", rowData);
+      }
+    });
     setDataSource([...tempData]);
     setSelectedRows([]);
     console.log(dataSource);
@@ -47,10 +62,14 @@ const CustomTable = ({ tableData, tableColumns }) => {
     setShowDataForm(true);
   };
 
+  const handleEdit = (record) => {
+    console.log("edit is clicked", record.key, record);
+    setIsEdit(true);
+    setEditedRow(record);
+    setShowDataForm(true);
+  };
+
   const handleDelete = () => {
-    // TO DO:
-    // manipulation of data should either be done to redux state or in the parent component of CustomTable
-    // bug - deletion breaks for some reason just after adding a new element
     selectedRows.forEach((row) => {
       let tempData = dataSource;
       const index = tempData.indexOf(row);
@@ -79,6 +98,17 @@ const CustomTable = ({ tableData, tableColumns }) => {
     // }),
   };
 
+  const columns = [
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <EditFilled className="edit-icon" onClick={() => handleEdit(record)} />
+      ),
+    },
+    ...tableColumns,
+  ];
+
   return (
     <div style={{ width: "100%" }}>
       <DataInputModal
@@ -86,6 +116,9 @@ const CustomTable = ({ tableData, tableColumns }) => {
         columns={tableColumns}
         setVisible={setModalVisible}
         visible={showDataForm}
+        isEdit={isEdit}
+        editedRowData={editedRow}
+        editRow={editRow}
       />
       <div className={"table-actions-container"}>
         <Button variant={"primary"} onClick={handleAddData}>
@@ -100,7 +133,7 @@ const CustomTable = ({ tableData, tableColumns }) => {
         )}
       </div>
       <Table
-        columns={tableColumns}
+        columns={columns}
         dataSource={dataSource}
         rowSelection={{ ...rowSelection }}
       />
