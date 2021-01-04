@@ -47,7 +47,7 @@ const CustomTable = ({ tableData, tableColumns }) => {
   const editRow = (rowData) => {
     let tempData = dataSource;
     tempData.forEach((row) => {
-      if (row.key === rowData.key) {
+      if (row.key === rowData.key && row !== rowData) {
         row = Object.assign(row, rowData);
         console.log("old row data: ", row);
         console.log("new row data: ", rowData);
@@ -55,10 +55,13 @@ const CustomTable = ({ tableData, tableColumns }) => {
     });
     setDataSource([...tempData]);
     setSelectedRows([]);
+    setIsEdit(false);
     console.log(dataSource);
   };
 
   const handleAddData = () => {
+    setIsEdit(false);
+    setEditedRow({});
     setShowDataForm(true);
   };
 

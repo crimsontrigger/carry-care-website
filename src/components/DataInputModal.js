@@ -11,7 +11,6 @@ const DataInputModal = ({
   editRow,
 }) => {
   const handleOk = () => {
-    // TO DO: Add an edit function
     if (isEdit) {
       editRow({ ...rowData });
     } else {
@@ -28,9 +27,11 @@ const DataInputModal = ({
 
   useEffect(() => {
     console.log(isEdit, editedRowData);
-    if (isEdit) {
+    if (isEdit && editedRowData) {
       console.log("is edit");
       setRowData({ ...editedRowData });
+    } else {
+      setRowData({});
     }
   }, [isEdit, editedRowData]);
 
@@ -57,7 +58,7 @@ const DataInputModal = ({
               console.log(tempData);
               setRowData({ ...tempData });
             }}
-            value={rowData[column.key]}
+            value={rowData[column.key] ? rowData[column.key] : null}
           ></Input>
         </>
       ))}
