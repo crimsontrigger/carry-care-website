@@ -26,9 +26,7 @@ const DataInputModal = ({
   const [rowData, setRowData] = useState({});
 
   useEffect(() => {
-    console.log(isEdit, editedRowData);
     if (isEdit && editedRowData) {
-      console.log("is edit");
       setRowData({ ...editedRowData });
     } else {
       setRowData({});
