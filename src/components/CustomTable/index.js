@@ -124,11 +124,19 @@ const CustomTable = ({ tableData, tableColumns }) => {
         editRow={editRow}
       />
       <div className={"table-actions-container"}>
-        <Button variant={"primary"} onClick={handleAddData}>
+        <Button
+          variant={"primary"}
+          onClick={handleAddData}
+          className="table-actions-button"
+        >
           Add Row
         </Button>
         {showDeleteButton && (
-          <Button variant={"primary"} onClick={handleDelete}>
+          <Button
+            variant={"danger"}
+            onClick={handleDelete}
+            className="table-actions-button"
+          >
             {selectedRows.length > 1
               ? "Delete Selected Rows"
               : "Delete Selected Row"}

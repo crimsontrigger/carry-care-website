@@ -1,5 +1,12 @@
 .table-actions-container {
   padding: 4%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.table-actions-button {
+  margin: 5px;
 }
 
 .edit-icon {
