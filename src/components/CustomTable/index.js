@@ -3,7 +3,7 @@ import { Table } from "antd";
 import Button from "react-bootstrap/Button";
 import DataInputModal from "./../DataInputModal";
 import { v4 as uuidv4 } from "uuid";
-import { EditFilled } from "@ant-design/icons";
+import { EditFilled, DeleteFilled, PlusCircleFilled } from "@ant-design/icons";
 
 import "./styles.css";
 
@@ -129,6 +129,7 @@ const CustomTable = ({ tableData, tableColumns }) => {
           onClick={handleAddData}
           className="table-actions-button"
         >
+          <PlusCircleFilled className="table-actions-button-icon" />
           Add Row
         </Button>
         {showDeleteButton && (
@@ -137,6 +138,7 @@ const CustomTable = ({ tableData, tableColumns }) => {
             onClick={handleDelete}
             className="table-actions-button"
           >
+            <DeleteFilled className="table-actions-button-icon" />
             {selectedRows.length > 1
               ? "Delete Selected Rows"
               : "Delete Selected Row"}

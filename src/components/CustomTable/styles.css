@@ -6,7 +6,15 @@
 }
 
 .table-actions-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 5px;
+}
+
+.table-actions-button-icon {
+  font-size: 1.2rem;
+  margin-right: 5px;
 }
 
 .edit-icon {
